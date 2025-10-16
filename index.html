@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who Farted?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.3s ease-out;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-green-100 to-yellow-100 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full text-center">
+        <div class="mb-6">
+            <svg class="w-16 h-16 mx-auto text-green-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+            </svg>
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">Who Farted?</h1>
+            <p class="text-gray-600">Press the button to solve the mystery</p>
+        </div>
+        
+        <button
+            id="investigateBtn"
+            class="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-8 rounded-full text-xl transition-all transform hover:scale-105 shadow-lg mb-6"
+        >
+            🔍 Investigate
+        </button>
+        
+        <div id="result" class="bg-yellow-50 border-4 border-yellow-300 rounded-2xl p-6 animate-fadeIn hidden">
+            <h2 class="text-2xl font-bold text-red-600 mb-3">CAUGHT!</h2>
+            <p id="culpritName" class="text-3xl font-bold text-gray-800 mb-3"></p>
+            <p class="text-lg text-gray-700">
+                <span class="font-semibold">Reason:</span> <span id="culpritReason"></span>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const names = [
+            "Uncle Bob", "Grandma Betty", "Little Timmy", "The Dog", "Professor Jenkins",
+            "Karen from HR", "Your Roommate", "The Quiet Kid", "Dave", "Susan",
+            "The Delivery Guy", "Your Boss", "The Babysitter", "Coach Martinez", "Aunt Linda"
+        ];
+        
+        const reasons = [
+            "had too many beans for lunch",
+            "couldn't hold it in during the meeting",
+            "thought nobody would notice",
+            "ate expired yogurt this morning",
+            "has been holding it since breakfast",
+            "had three burritos before coming here",
+            "is lactose intolerant but had cheese anyway",
+            "tried a new protein shake",
+            "ate the mystery casserole from the potluck",
+            "drank too much kombucha",
+            "had gas station sushi (rookie mistake)",
+            "ate an entire bag of sugar-free gummies",
+            "can't resist spicy food despite the consequences",
+            "forgot to chew properly",
+            "mixed pizza and ice cream"
+        ];
+        
+        const investigateBtn = document.getElementById('investigateBtn');
+        const resultDiv = document.getElementById('result');
+        const culpritName = document.getElementById('culpritName');
+        const culpritReason = document.getElementById('culpritReason');
+        
+        investigateBtn.addEventListener('click', () => {
+            const randomName = names[Math.floor(Math.random() * names.length)];
+            const randomReason = reasons[Math.floor(Math.random() * reasons.length)];
+            
+            culpritName.textContent = randomName;
+            culpritReason.textContent = randomReason;
+            
+            resultDiv.classList.remove('hidden');
+            // Trigger animation by removing and re-adding the class
+            resultDiv.classList.remove('animate-fadeIn');
+            void resultDiv.offsetWidth; // Force reflow
+            resultDiv.classList.add('animate-fadeIn');
+        });
+    </script>
+</body>
+</html>
